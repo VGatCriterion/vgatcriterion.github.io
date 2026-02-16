@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vadim's Links</title>
+  <title>Vadim's links</title>
 
   <style>
     :root{
@@ -147,7 +147,7 @@
     }
 
     .panel.open{
-      max-height: 240px; /* enough for a few links; JS will set exact height */
+      max-height: 240px; /* JS sets exact height on open */
     }
 
     .sub a.btn{
@@ -170,6 +170,21 @@
 
     <section class="card" aria-label="Quick links">
       <ul class="stack">
+
+        <!-- NEW: Sales Packages (top folder) -->
+        <li>
+          <button class="btn folder" type="button" aria-expanded="false" aria-controls="panel-sales">
+            <span class="left"><span class="icon">🧾</span><span class="label">Sales Packages</span></span>
+            <span class="chev" aria-hidden="true">▾</span>
+          </button>
+          <div id="panel-sales" class="panel" role="region" aria-label="Sales Packages links">
+            <div class="sub">
+              <a class="btn" href="https://criterionindustries-my.sharepoint.com/:w:/g/personal/vadim_gussak_criterionindustries_com_au/IQB_VitgpbdqRryQJ3BC1cuUAVX_hXpBUQQCJeqz16Ibn2E?e=N3w2JG" target="_blank" rel="noopener noreferrer">
+                <span class="icon">❓</span><span>Sales Package FAQ</span>
+              </a>
+            </div>
+          </div>
+        </li>
 
         <!-- Folder: Reports & Analysis -->
         <li>
@@ -224,8 +239,7 @@
   </main>
 
   <script>
-    // Minimal accordion: click folder to toggle its panel.
-    // Also auto-sizes panel height for smooth animation.
+    // Minimal accordion: single-open behavior, smooth height animation.
     const folders = document.querySelectorAll('button.folder');
 
     function closeOthers(except){
@@ -240,7 +254,6 @@
 
     folders.forEach(btn => {
       const panel = document.getElementById(btn.getAttribute('aria-controls'));
-      // Ensure closed on load.
       panel.style.maxHeight = '0px';
 
       btn.addEventListener('click', () => {
@@ -254,12 +267,10 @@
         } else {
           btn.setAttribute('aria-expanded','true');
           panel.classList.add('open');
-          // Set exact height so it animates regardless of content.
           panel.style.maxHeight = panel.scrollHeight + 'px';
         }
       });
 
-      // If window resizes while open, recalc height.
       window.addEventListener('resize', () => {
         const open = btn.getAttribute('aria-expanded') === 'true';
         if(open){
